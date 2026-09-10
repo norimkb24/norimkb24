@@ -175,6 +175,16 @@
     }
     footer { padding: 30px 0 45px; color: var(--muted); font-size: .8rem; text-align: center; }
 
+    .sticker {
+      position: fixed;
+      z-index: 2;
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(2px 3px 0 rgba(0,0,0,.10));
+    }
+    .sticker-bow { left: 2.5%; top: 25%; font-size: 2.2rem; transform: rotate(-12deg); }
+    .sticker-star { right: 3%; top: 48%; color: var(--accent-2); font-size: 2rem; }
+    .sticker-heart { left: 4%; bottom: 15%; color: var(--accent); font-size: 2.4rem; transform: rotate(15deg); }
     .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
@@ -188,6 +198,149 @@
       html { scroll-behavior: auto; }
       *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
     }
+  
+    /* Cute dark-purple character-inspired theme */
+    :root {
+      --bg: #f8f2fb;
+      --surface: #fffaff;
+      --text: #211629;
+      --muted: #75677d;
+      --border: #e7d8ed;
+      --accent: #7c3aed;
+      --accent-2: #d946ef;
+      --shadow: 0 18px 50px rgba(76, 29, 149, .12);
+    }
+    [data-theme="dark"] {
+      --bg: #100b15;
+      --surface: #1a1220;
+      --text: #faf5ff;
+      --muted: #b9aabd;
+      --border: #33253b;
+      --accent: #b38cff;
+      --accent-2: #f472b6;
+      --shadow: 0 18px 55px rgba(0, 0, 0, .32);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 10% 20%, rgba(217,70,239,.10), transparent 22rem),
+        radial-gradient(circle at 90% 75%, rgba(124,58,237,.10), transparent 25rem),
+        var(--bg);
+    }
+    nav {
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      border-bottom: 2px solid var(--border);
+    }
+    .logo {
+      color: var(--accent);
+      font-size: 1.15rem;
+    }
+    .logo::after {
+      content: " ♡";
+      color: var(--accent-2);
+    }
+    .eyebrow {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 4px 4px 0 color-mix(in srgb, var(--accent-2) 45%, transparent);
+    }
+    h1 {
+      text-shadow: 3px 3px 0 rgba(217,70,239,.10);
+    }
+    .gradient {
+      background: linear-gradient(120deg, #211629, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    .btn.primary {
+      background: linear-gradient(135deg, var(--accent), #4c1d95);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 4px 4px 0 rgba(217,70,239,.25);
+    }
+    .fact, .skill, .contact-box, .project {
+      border-color: var(--border);
+      box-shadow: var(--shadow);
+    }
+    .skill {
+      background: var(--surface);
+      border-radius: 14px 14px 14px 4px;
+    }
+    .skill:hover {
+      background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+    }
+    .projects-empty {
+      min-height: 180px;
+      border: 2px dashed var(--border);
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      color: var(--muted);
+      font-weight: 700;
+      position: relative;
+      overflow: hidden;
+    }
+    .projects-empty span:first-child,
+    .projects-empty span:last-child {
+      color: var(--accent-2);
+      font-size: 1.6rem;
+    }
+    .projects-empty::before {
+      content: "✦  ♡  ✦  ♡  ✦";
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      color: color-mix(in srgb, var(--accent-2) 55%, transparent);
+      letter-spacing: 10px;
+      font-size: .8rem;
+    }
+    .contact-box {
+      background:
+        radial-gradient(circle at 85% 20%, rgba(217,70,239,.15), transparent 8rem),
+        var(--surface);
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-box::before {
+      content: "☾  ✦  ♡";
+      position: absolute;
+      top: 18px;
+      left: 24px;
+      color: var(--accent-2);
+      letter-spacing: 8px;
+      opacity: .8;
+    }
+    .contact-box::after {
+      content: "♡";
+      position: absolute;
+      right: 35px;
+      bottom: 20px;
+      font-size: 3rem;
+      color: color-mix(in srgb, var(--accent) 25%, transparent);
+      transform: rotate(-15deg);
+    }
+    section {
+      position: relative;
+    }
+    section::after {
+      content: "✦";
+      position: absolute;
+      right: 4%;
+      top: 34%;
+      color: color-mix(in srgb, var(--accent-2) 38%, transparent);
+      font-size: 1.3rem;
+      pointer-events: none;
+    }
+    footer::before {
+      content: "♡  ✦  ☾  ✦  ♡";
+      display: block;
+      color: var(--accent-2);
+      margin-bottom: 10px;
+      letter-spacing: 8px;
+    }
+
   </style>
 </head>
 <body>
@@ -204,12 +357,15 @@
     </div>
   </nav>
 
+  <div class="sticker sticker-bow">🎀</div>
+  <div class="sticker sticker-star">✦</div>
+  <div class="sticker sticker-heart">♡</div>
   <main>
     <section id="hero">
       <div class="container hero-content reveal">
         <div class="eyebrow">Designer · Developer · Problem Solver</div>
-        <h1>Hi, I'm <span class="gradient">Alex Morgan.</span></h1>
-        <p>I create thoughtful digital experiences that combine clean design, useful technology, and a little bit of personality.</p>
+        <h1>Hi, I'm <span class="gradient">Ashley Yuan.</span></h1>
+        <p></p>
         <div class="buttons">
           <a class="btn primary" href="#projects">View my work</a>
           <a class="btn" href="#contact">Let's talk</a>
@@ -225,14 +381,14 @@
         </div>
         <div class="about-grid">
           <p class="about-text">
-            I'm a creative developer who enjoys turning complex ideas into simple, accessible experiences.
-            I care about details, clear communication, and building products that genuinely help people.
-            When I'm away from my screen, you'll usually find me exploring new places, reading, or learning something new.
+            
+            
+            
           </p>
           <div class="facts">
-            <div class="fact"><strong>Based in</strong>Los Angeles, CA</div>
-            <div class="fact"><strong>Focus</strong>Web design & development</div>
-            <div class="fact"><strong>Currently</strong>Open to exciting projects</div>
+            <div class="fact"><strong>Based in</strong>Beijing, China</div>
+            <div class="fact"><strong>Focus</strong>Studying AI&Economics</div>
+            <div class="fact"><strong>Currently</strong></div>
           </div>
         </div>
       </div>
@@ -242,13 +398,14 @@
       <div class="container reveal">
         <div class="section-heading">
           <span>02 — Skills</span>
-          <h2>Tools I use to bring ideas to life.</h2>
+          <h2>My favorite social spaces.</h2>
         </div>
         <div class="skills">
-          <span class="skill">HTML</span><span class="skill">CSS</span><span class="skill">JavaScript</span>
-          <span class="skill">React</span><span class="skill">UI / UX Design</span><span class="skill">Figma</span>
-          <span class="skill">Responsive Design</span><span class="skill">Git</span><span class="skill">Accessibility</span>
-          <span class="skill">Problem Solving</span>
+          <span class="skill">Weibo</span>
+          <span class="skill">Red note</span>
+          <span class="skill">TikTok</span>
+          <span class="skill">Instagram</span>
+          <span class="skill">Twitter</span>
         </div>
       </div>
     </section>
@@ -257,22 +414,9 @@
       <div class="container reveal">
         <div class="section-heading">
           <span>03 — Selected Projects</span>
-          <h2>A few things I've built.</h2>
+          <h2></h2>
         </div>
-        <div class="projects">
-          <article class="project">
-            <div><span class="project-number">01</span><h3>FocusFlow</h3><p>A minimalist productivity dashboard designed to make planning and deep work feel effortless.</p></div>
-            <div class="tags"><span class="tag">React</span><span class="tag">UI/UX</span><span class="tag">Productivity</span></div>
-          </article>
-          <article class="project">
-            <div><span class="project-number">02</span><h3>Studio Archive</h3><p>A responsive portfolio experience for a creative studio, with a focus on typography and storytelling.</p></div>
-            <div class="tags"><span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">Branding</span></div>
-          </article>
-          <article class="project">
-            <div><span class="project-number">03</span><h3>EcoTrack</h3><p>A concept app that helps users understand everyday environmental impact through simple visual data.</p></div>
-            <div class="tags"><span class="tag">Data Viz</span><span class="tag">Figma</span><span class="tag">Research</span></div>
-          </article>
-        </div>
+        <div class="projects-empty"><span>♡</span><span>Coming soon...</span><span>✦</span></div>
       </div>
     </section>
 
@@ -284,13 +428,12 @@
             <h2>Have an idea?</h2>
           </div>
           <p>Whether you have a project in mind or just want to say hello, I'd love to hear from you.</p>
-          <a class="email" href="mailto:hello@alexmorgan.dev">hello@alexmorgan.dev</a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer>© 2026 Alex Morgan. Built with HTML, CSS & JavaScript.</footer>
+  <footer>© 2026 Ashley Yuan. Built with HTML, CSS & JavaScript.</footer>
 
   <script>
     const root = document.documentElement;
