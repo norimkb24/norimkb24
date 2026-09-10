@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Personal portfolio website" />
+  <title>Alex Morgan — Portfolio</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --surface: #ffffff;
+      --text: #111318;
+      --muted: #686d78;
+      --border: #e3e5e9;
+      --accent: #6c63ff;
+      --accent-2: #8b84ff;
+      --shadow: 0 18px 50px rgba(15, 18, 25, .08);
+      --radius: 20px;
+      --max: 1100px;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0d0f13;
+      --surface: #15181e;
+      --text: #f3f4f6;
+      --muted: #a1a7b2;
+      --border: #282d36;
+      --accent: #9a93ff;
+      --accent-2: #b0aaff;
+      --shadow: 0 18px 50px rgba(0, 0, 0, .25);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      transition: background .3s ease, color .3s ease;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(100% - 40px, var(--max)); margin: auto; }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background: color-mix(in srgb, var(--bg) 82%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+    }
+    .nav-inner {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo { font-weight: 800; letter-spacing: -.04em; font-size: 1.05rem; }
+    .nav-links { display: flex; gap: 26px; align-items: center; }
+    .nav-links a {
+      color: var(--muted);
+      font-size: .9rem;
+      transition: color .2s ease;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .theme-toggle {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: transform .2s ease, border-color .2s ease;
+    }
+    .theme-toggle:hover { transform: rotate(15deg); border-color: var(--accent); }
+
+    section { padding: 110px 0; }
+    #hero { min-height: 100vh; display: grid; place-items: center; padding-top: 120px; }
+    .hero-content { max-width: 850px; text-align: center; }
+    .eyebrow {
+      display: inline-flex;
+      padding: 7px 13px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: .78rem;
+      margin-bottom: 24px;
+      background: var(--surface);
+    }
+    h1 {
+      font-size: clamp(3.2rem, 9vw, 7rem);
+      line-height: .95;
+      letter-spacing: -.075em;
+      margin-bottom: 28px;
+    }
+    .gradient {
+      background: linear-gradient(120deg, var(--text), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero-content p {
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      max-width: 650px;
+      margin: auto;
+    }
+    .buttons { margin-top: 34px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      padding: 12px 19px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: .9rem;
+      transition: .25s ease;
+    }
+    .btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+    .btn:hover { transform: translateY(-2px); border-color: var(--accent); }
+
+    .section-heading { margin-bottom: 42px; }
+    .section-heading span { color: var(--accent); font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .13em; }
+    h2 { font-size: clamp(2rem, 5vw, 3.2rem); letter-spacing: -.055em; line-height: 1.05; margin-top: 8px; }
+    .about-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 60px; align-items: start; }
+    .about-text { color: var(--muted); font-size: 1.05rem; }
+    .facts { display: grid; gap: 14px; }
+    .fact { padding: 18px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; }
+    .fact strong { display: block; font-size: .82rem; color: var(--muted); margin-bottom: 2px; }
+
+    .skills { display: flex; flex-wrap: wrap; gap: 10px; }
+    .skill {
+      padding: 10px 15px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 999px;
+      font-size: .9rem;
+      transition: .2s ease;
+    }
+    .skill:hover { transform: translateY(-3px); border-color: var(--accent); color: var(--accent); }
+
+    .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .project {
+      min-height: 290px;
+      padding: 26px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow);
+      transition: transform .3s ease, border-color .3s ease;
+    }
+    .project:hover { transform: translateY(-7px); border-color: var(--accent); }
+    .project-number { color: var(--accent); font-weight: 700; font-size: .8rem; }
+    .project h3 { font-size: 1.35rem; margin: 12px 0 8px; letter-spacing: -.03em; }
+    .project p { color: var(--muted); font-size: .9rem; }
+    .tags { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 20px; }
+    .tag { font-size: .72rem; color: var(--muted); padding: 5px 9px; border-radius: 7px; background: var(--bg); }
+
+    .contact-box {
+      text-align: center;
+      padding: 70px 25px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+    .contact-box p { color: var(--muted); max-width: 550px; margin: 16px auto 25px; }
+    .email {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1.05rem;
+      word-break: break-word;
+    }
+    footer { padding: 30px 0 45px; color: var(--muted); font-size: .8rem; text-align: center; }
+
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 800px) {
+      .nav-links { display: none; }
+      .about-grid, .projects { grid-template-columns: 1fr; }
+      section { padding: 80px 0; }
+      .about-grid { gap: 30px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container nav-inner">
+      <a class="logo" href="#hero">AM.</a>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">☾</button>
+    </div>
+  </nav>
+
+  <main>
+    <section id="hero">
+      <div class="container hero-content reveal">
+        <div class="eyebrow">Designer · Developer · Problem Solver</div>
+        <h1>Hi, I'm <span class="gradient">Alex Morgan.</span></h1>
+        <p>I create thoughtful digital experiences that combine clean design, useful technology, and a little bit of personality.</p>
+        <div class="buttons">
+          <a class="btn primary" href="#projects">View my work</a>
+          <a class="btn" href="#contact">Let's talk</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container reveal">
+        <div class="section-heading">
+          <span>01 — About Me</span>
+          <h2>Curious by nature.<br>Intentional by design.</h2>
+        </div>
+        <div class="about-grid">
+          <p class="about-text">
+            I'm a creative developer who enjoys turning complex ideas into simple, accessible experiences.
+            I care about details, clear communication, and building products that genuinely help people.
+            When I'm away from my screen, you'll usually find me exploring new places, reading, or learning something new.
+          </p>
+          <div class="facts">
+            <div class="fact"><strong>Based in</strong>Los Angeles, CA</div>
+            <div class="fact"><strong>Focus</strong>Web design & development</div>
+            <div class="fact"><strong>Currently</strong>Open to exciting projects</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container reveal">
+        <div class="section-heading">
+          <span>02 — Skills</span>
+          <h2>Tools I use to bring ideas to life.</h2>
+        </div>
+        <div class="skills">
+          <span class="skill">HTML</span><span class="skill">CSS</span><span class="skill">JavaScript</span>
+          <span class="skill">React</span><span class="skill">UI / UX Design</span><span class="skill">Figma</span>
+          <span class="skill">Responsive Design</span><span class="skill">Git</span><span class="skill">Accessibility</span>
+          <span class="skill">Problem Solving</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container reveal">
+        <div class="section-heading">
+          <span>03 — Selected Projects</span>
+          <h2>A few things I've built.</h2>
+        </div>
+        <div class="projects">
+          <article class="project">
+            <div><span class="project-number">01</span><h3>FocusFlow</h3><p>A minimalist productivity dashboard designed to make planning and deep work feel effortless.</p></div>
+            <div class="tags"><span class="tag">React</span><span class="tag">UI/UX</span><span class="tag">Productivity</span></div>
+          </article>
+          <article class="project">
+            <div><span class="project-number">02</span><h3>Studio Archive</h3><p>A responsive portfolio experience for a creative studio, with a focus on typography and storytelling.</p></div>
+            <div class="tags"><span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">Branding</span></div>
+          </article>
+          <article class="project">
+            <div><span class="project-number">03</span><h3>EcoTrack</h3><p>A concept app that helps users understand everyday environmental impact through simple visual data.</p></div>
+            <div class="tags"><span class="tag">Data Viz</span><span class="tag">Figma</span><span class="tag">Research</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container reveal">
+        <div class="contact-box">
+          <div class="section-heading" style="margin-bottom:0">
+            <span>04 — Contact</span>
+            <h2>Have an idea?</h2>
+          </div>
+          <p>Whether you have a project in mind or just want to say hello, I'd love to hear from you.</p>
+          <a class="email" href="mailto:hello@alexmorgan.dev">hello@alexmorgan.dev</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 Alex Morgan. Built with HTML, CSS & JavaScript.</footer>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById("themeToggle");
+
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) root.dataset.theme = savedTheme;
+
+    function updateIcon() {
+      toggle.textContent = root.dataset.theme === "dark" ? "☀" : "☾";
+      toggle.setAttribute("aria-label",
+        root.dataset.theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+    }
+    updateIcon();
+
+    toggle.addEventListener("click", () => {
+      const dark = root.dataset.theme === "dark";
+      root.dataset.theme = dark ? "light" : "dark";
+      localStorage.setItem("theme", root.dataset.theme);
+      updateIcon();
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
