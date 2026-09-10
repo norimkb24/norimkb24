@@ -173,6 +173,16 @@
       font-size: 1.05rem;
       word-break: break-word;
     }
+    .contact-email {
+      display: inline-block;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+    .contact-email a {
+      color: var(--accent);
+      font-weight: 700;
+    }
     footer { padding: 30px 0 45px; color: var(--muted); font-size: .8rem; text-align: center; }
 
     .sticker {
@@ -201,30 +211,31 @@
   
     /* Cute dark-purple character-inspired theme */
     :root {
-      --bg: #f8f2fb;
-      --surface: #fffaff;
-      --text: #211629;
-      --muted: #75677d;
-      --border: #e7d8ed;
-      --accent: #7c3aed;
-      --accent-2: #d946ef;
-      --shadow: 0 18px 50px rgba(76, 29, 149, .12);
+      --bg: #f4f8fc;
+      --surface: #fbfdff;
+      --text: #172334;
+      --muted: #687789;
+      --border: #dbe7f2;
+      --accent: #5b8fc9;
+      --accent-2: #8ab4df;
+      --shadow: 0 18px 50px rgba(52, 91, 130, .10);
     }
     [data-theme="dark"] {
-      --bg: #100b15;
-      --surface: #1a1220;
-      --text: #faf5ff;
-      --muted: #b9aabd;
-      --border: #33253b;
-      --accent: #b38cff;
-      --accent-2: #f472b6;
-      --shadow: 0 18px 55px rgba(0, 0, 0, .32);
+      color-scheme: dark;
+      --bg: #101a27;
+      --surface: #182536;
+      --text: #f1f6fb;
+      --muted: #aebdcd;
+      --border: #2d4054;
+      --accent: #86b8e8;
+      --accent-2: #a9ccef;
+      --shadow: 0 18px 55px rgba(0, 0, 0, .28);
     }
 
     body {
       background:
-        radial-gradient(circle at 10% 20%, rgba(217,70,239,.10), transparent 22rem),
-        radial-gradient(circle at 90% 75%, rgba(124,58,237,.10), transparent 25rem),
+        radial-gradient(circle at 10% 20%, rgba(91,143,201,.10), transparent 22rem),
+        radial-gradient(circle at 90% 75%, rgba(138,180,223,.11), transparent 25rem),
         var(--bg);
     }
     nav {
@@ -245,18 +256,18 @@
       box-shadow: 4px 4px 0 color-mix(in srgb, var(--accent-2) 45%, transparent);
     }
     h1 {
-      text-shadow: 3px 3px 0 rgba(217,70,239,.10);
+      text-shadow: 3px 3px 0 rgba(91,143,201,.10);
     }
     .gradient {
-      background: linear-gradient(120deg, #211629, var(--accent), var(--accent-2));
+      background: linear-gradient(120deg, #172334, var(--accent), var(--accent-2));
       -webkit-background-clip: text;
       background-clip: text;
     }
     .btn.primary {
-      background: linear-gradient(135deg, var(--accent), #4c1d95);
+      background: linear-gradient(135deg, var(--accent), #416f9f);
       color: #fff;
       border-color: transparent;
-      box-shadow: 4px 4px 0 rgba(217,70,239,.25);
+      box-shadow: 4px 4px 0 rgba(91,143,201,.22);
     }
     .fact, .skill, .contact-box, .project {
       border-color: var(--border);
@@ -298,7 +309,7 @@
     }
     .contact-box {
       background:
-        radial-gradient(circle at 85% 20%, rgba(217,70,239,.15), transparent 8rem),
+        radial-gradient(circle at 85% 20%, rgba(91,143,201,.14), transparent 8rem),
         var(--surface);
       position: relative;
       overflow: hidden;
@@ -363,7 +374,7 @@
   <main>
     <section id="hero">
       <div class="container hero-content reveal">
-        <div class="eyebrow">Designer · Developer · Problem Solver</div>
+        <div class="eyebrow">High School Student</div>
         <h1>Hi, I'm <span class="gradient">Ashley Yuan.</span></h1>
         <p></p>
         <div class="buttons">
@@ -398,7 +409,7 @@
       <div class="container reveal">
         <div class="section-heading">
           <span>02 — Skills</span>
-          <h2>My favorite social spaces.</h2>
+          <h2>Tools I use to bring ideas to life.</h2>
         </div>
         <div class="skills">
           <span class="skill">Weibo</span>
@@ -427,7 +438,7 @@
             <span>04 — Contact</span>
             <h2>Have an idea?</h2>
           </div>
-          <p>Whether you have a project in mind or just want to say hello, I'd love to hear from you.</p>
+          <p>Whether you have a project in mind or just want to say hello, I'd love to hear from you.<br><span class="contact-email">Text me here! <a href="mailto:18911848870@163.com">18911848870@163.com</a></span></p>
         </div>
       </div>
     </section>
