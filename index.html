@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Personal portfolio website" />
+  <title>Ashley Yuan — Portfolio</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --surface: #ffffff;
+      --text: #111318;
+      --muted: #686d78;
+      --border: #e3e5e9;
+      --accent: #6c63ff;
+      --accent-2: #8b84ff;
+      --shadow: 0 18px 50px rgba(15, 18, 25, .08);
+      --radius: 20px;
+      --max: 1100px;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0d0f13;
+      --surface: #15181e;
+      --text: #f3f4f6;
+      --muted: #a1a7b2;
+      --border: #282d36;
+      --accent: #9a93ff;
+      --accent-2: #b0aaff;
+      --shadow: 0 18px 50px rgba(0, 0, 0, .25);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      transition: background .3s ease, color .3s ease;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(100% - 40px, var(--max)); margin: auto; }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background: color-mix(in srgb, var(--bg) 82%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+    }
+    .nav-inner {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo { font-weight: 800; letter-spacing: -.04em; font-size: 1.05rem; }
+    .nav-links { display: flex; gap: 26px; align-items: center; }
+    .nav-links a {
+      color: var(--muted);
+      font-size: .9rem;
+      transition: color .2s ease;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .theme-toggle {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: transform .2s ease, border-color .2s ease;
+    }
+    .theme-toggle:hover { transform: rotate(15deg); border-color: var(--accent); }
+
+    section { padding: 110px 0; }
+    #hero { min-height: 100vh; display: grid; place-items: center; padding-top: 120px; }
+    .hero-content { max-width: 850px; text-align: center; }
+    .eyebrow {
+      display: inline-flex;
+      padding: 7px 13px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: .78rem;
+      margin-bottom: 24px;
+      background: var(--surface);
+    }
+    h1 {
+      font-size: clamp(3.2rem, 9vw, 7rem);
+      line-height: .95;
+      letter-spacing: -.075em;
+      margin-bottom: 28px;
+    }
+    .gradient {
+      background: linear-gradient(120deg, var(--text), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero-content p {
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      max-width: 650px;
+      margin: auto;
+    }
+    .buttons { margin-top: 34px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      padding: 12px 19px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: .9rem;
+      transition: .25s ease;
+    }
+    .btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+    .btn:hover { transform: translateY(-2px); border-color: var(--accent); }
+
+    .section-heading { margin-bottom: 42px; }
+    .section-heading span { color: var(--accent); font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .13em; }
+    h2 { font-size: clamp(2rem, 5vw, 3.2rem); letter-spacing: -.055em; line-height: 1.05; margin-top: 8px; }
+    .about-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 60px; align-items: start; }
+    .about-text { color: var(--muted); font-size: 1.05rem; }
+    .facts { display: grid; gap: 14px; }
+    .fact { padding: 18px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; }
+    .fact strong { display: block; font-size: .82rem; color: var(--muted); margin-bottom: 2px; }
+
+    .skills { display: flex; flex-wrap: wrap; gap: 10px; }
+    .skill {
+      padding: 10px 15px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 999px;
+      font-size: .9rem;
+      transition: .2s ease;
+    }
+    .skill:hover { transform: translateY(-3px); border-color: var(--accent); color: var(--accent); }
+
+    .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .project {
+      min-height: 290px;
+      padding: 26px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow);
+      transition: transform .3s ease, border-color .3s ease;
+    }
+    .project:hover { transform: translateY(-7px); border-color: var(--accent); }
+    .project-number { color: var(--accent); font-weight: 700; font-size: .8rem; }
+    .project h3 { font-size: 1.35rem; margin: 12px 0 8px; letter-spacing: -.03em; }
+    .project p { color: var(--muted); font-size: .9rem; }
+    .tags { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 20px; }
+    .tag { font-size: .72rem; color: var(--muted); padding: 5px 9px; border-radius: 7px; background: var(--bg); }
+
+    .contact-box {
+      text-align: center;
+      padding: 70px 25px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+    .contact-box p { color: var(--muted); max-width: 550px; margin: 16px auto 25px; }
+    .email {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1.05rem;
+      word-break: break-word;
+    }
+    .contact-email {
+      display: inline-block;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+    .contact-email a {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    footer { padding: 30px 0 45px; color: var(--muted); font-size: .8rem; text-align: center; }
+
+    .sticker {
+      position: fixed;
+      z-index: 2;
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(2px 3px 0 rgba(0,0,0,.10));
+    }
+    .sticker-bow { left: 2.5%; top: 25%; font-size: 2.2rem; transform: rotate(-12deg); }
+    .sticker-star { right: 3%; top: 48%; color: var(--accent-2); font-size: 2rem; }
+    .sticker-heart { left: 4%; bottom: 15%; color: var(--accent); font-size: 2.4rem; transform: rotate(15deg); }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 800px) {
+      .nav-links { display: none; }
+      .about-grid, .projects { grid-template-columns: 1fr; }
+      section { padding: 80px 0; }
+      .about-grid { gap: 30px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  
+    /* Cute dark-purple character-inspired theme */
+    :root {
+      --bg: #f4f8fc;
+      --surface: #fbfdff;
+      --text: #172334;
+      --muted: #687789;
+      --border: #dbe7f2;
+      --accent: #5b8fc9;
+      --accent-2: #8ab4df;
+      --shadow: 0 18px 50px rgba(52, 91, 130, .10);
+    }
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #101a27;
+      --surface: #182536;
+      --text: #f1f6fb;
+      --muted: #aebdcd;
+      --border: #2d4054;
+      --accent: #86b8e8;
+      --accent-2: #a9ccef;
+      --shadow: 0 18px 55px rgba(0, 0, 0, .28);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 10% 20%, rgba(91,143,201,.10), transparent 22rem),
+        radial-gradient(circle at 90% 75%, rgba(138,180,223,.11), transparent 25rem),
+        var(--bg);
+    }
+    nav {
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      border-bottom: 2px solid var(--border);
+    }
+    .logo {
+      color: var(--accent);
+      font-size: 1.15rem;
+    }
+    .logo::after {
+      content: " ♡";
+      color: var(--accent-2);
+    }
+    .eyebrow {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 4px 4px 0 color-mix(in srgb, var(--accent-2) 45%, transparent);
+    }
+    h1 {
+      text-shadow: 3px 3px 0 rgba(91,143,201,.10);
+    }
+    .gradient {
+      background: linear-gradient(120deg, #172334, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    .btn.primary {
+      background: linear-gradient(135deg, var(--accent), #416f9f);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 4px 4px 0 rgba(91,143,201,.22);
+    }
+    .fact, .skill, .contact-box, .project {
+      border-color: var(--border);
+      box-shadow: var(--shadow);
+    }
+    .skill {
+      background: var(--surface);
+      border-radius: 14px 14px 14px 4px;
+    }
+    .skill:hover {
+      background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+    }
+    .projects-empty {
+      min-height: 180px;
+      border: 2px dashed var(--border);
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      color: var(--muted);
+      font-weight: 700;
+      position: relative;
+      overflow: hidden;
+    }
+    .projects-empty span:first-child,
+    .projects-empty span:last-child {
+      color: var(--accent-2);
+      font-size: 1.6rem;
+    }
+    .projects-empty::before {
+      content: "✦  ♡  ✦  ♡  ✦";
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      color: color-mix(in srgb, var(--accent-2) 55%, transparent);
+      letter-spacing: 10px;
+      font-size: .8rem;
+    }
+    .contact-box {
+      background:
+        radial-gradient(circle at 85% 20%, rgba(91,143,201,.14), transparent 8rem),
+        var(--surface);
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-box::before {
+      content: "☾  ✦  ♡";
+      position: absolute;
+      top: 18px;
+      left: 24px;
+      color: var(--accent-2);
+      letter-spacing: 8px;
+      opacity: .8;
+    }
+    .contact-box::after {
+      content: "♡";
+      position: absolute;
+      right: 35px;
+      bottom: 20px;
+      font-size: 3rem;
+      color: color-mix(in srgb, var(--accent) 25%, transparent);
+      transform: rotate(-15deg);
+    }
+    section {
+      position: relative;
+    }
+    section::after {
+      content: "✦";
+      position: absolute;
+      right: 4%;
+      top: 34%;
+      color: color-mix(in srgb, var(--accent-2) 38%, transparent);
+      font-size: 1.3rem;
+      pointer-events: none;
+    }
+    footer::before {
+      content: "♡  ✦  ☾  ✦  ♡";
+      display: block;
+      color: var(--accent-2);
+      margin-bottom: 10px;
+      letter-spacing: 8px;
+    }
+
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container nav-inner">
+      <a class="logo" href="#hero">AM.</a>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">☾</button>
+    </div>
+  </nav>
+
+  <div class="sticker sticker-bow">🎀</div>
+  <div class="sticker sticker-star">✦</div>
+  <div class="sticker sticker-heart">♡</div>
+  <main>
+    <section id="hero">
+      <div class="container hero-content reveal">
+        <div class="eyebrow">High School Student</div>
+        <h1>Hi, I'm <span class="gradient">Ashley Yuan.</span></h1>
+        <p></p>
+        <div class="buttons">
+          <a class="btn primary" href="#projects">View my work</a>
+          <a class="btn" href="#contact">Let's talk</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container reveal">
+        <div class="section-heading">
+          <span>01 — About Me</span>
+          <h2>Curious by nature.<br>Intentional by design.</h2>
+        </div>
+        <div class="about-grid">
+          <p class="about-text">
+            
+            
+            
+          </p>
+          <div class="facts">
+            <div class="fact"><strong>Based in</strong>Beijing, China</div>
+            <div class="fact"><strong>Focus</strong>Studying AI&Economics</div>
+            <div class="fact"><strong>Currently</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container reveal">
+        <div class="section-heading">
+          <span>02 — Skills</span>
+          <h2>Tools I use to bring ideas to life.</h2>
+        </div>
+        <div class="skills">
+          <span class="skill">Weibo</span>
+          <span class="skill">Red note</span>
+          <span class="skill">TikTok</span>
+          <span class="skill">Instagram</span>
+          <span class="skill">Twitter</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container reveal">
+        <div class="section-heading">
+          <span>03 — Selected Projects</span>
+          <h2></h2>
+        </div>
+        <div class="projects-empty"><span>♡</span><span>Coming soon...</span><span>✦</span></div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container reveal">
+        <div class="contact-box">
+          <div class="section-heading" style="margin-bottom:0">
+            <span>04 — Contact</span>
+            <h2>Have an idea?</h2>
+          </div>
+          <p>Whether you have a project in mind or just want to say hello, I'd love to hear from you.<br><span class="contact-email">Text me here! <a href="mailto:18911848870@163.com">18911848870@163.com</a></span></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 Ashley Yuan. Built with HTML, CSS & JavaScript.</footer>
+
+  <script>
+    const root = document.documentElement;
+    const toggle = document.getElementById("themeToggle");
+
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) root.dataset.theme = savedTheme;
+
+    function updateIcon() {
+      toggle.textContent = root.dataset.theme === "dark" ? "☀" : "☾";
+      toggle.setAttribute("aria-label",
+        root.dataset.theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+    }
+    updateIcon();
+
+    toggle.addEventListener("click", () => {
+      const dark = root.dataset.theme === "dark";
+      root.dataset.theme = dark ? "light" : "dark";
+      localStorage.setItem("theme", root.dataset.theme);
+      updateIcon();
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
