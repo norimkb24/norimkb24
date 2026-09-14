@@ -158,6 +158,47 @@
     .tags { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 20px; }
     .tag { font-size: .72rem; color: var(--muted); padding: 5px 9px; border-radius: 7px; background: var(--bg); }
 
+    /* 跳转按钮样式（贴合原有可爱风） */
+    .project-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 18px;
+      padding: 10px 18px;
+      background: linear-gradient(135deg, var(--accent), #416f9f);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 rgba(91,143,201,.22);
+      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+      text-decoration: none;
+      width: fit-content;
+      letter-spacing: 0.3px;
+    }
+    .project-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 6px 8px 0 rgba(91,143,201,.28);
+      filter: brightness(1.03);
+    }
+    .project-btn:active {
+      transform: translateY(0);
+      box-shadow: 3px 3px 0 rgba(91,143,201,.2);
+    }
+    .project-btn .arrow {
+      font-size: 1rem;
+      transition: transform .2s ease;
+    }
+    .project-btn:hover .arrow {
+      transform: translateX(3px);
+    }
+    .project .project-btn {
+      margin-top: 20px;
+    }
+
     .contact-box {
       text-align: center;
       padding: 70px 25px;
@@ -208,7 +249,7 @@
       html { scroll-behavior: auto; }
       *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
     }
-  
+
     /* Cute dark-purple character-inspired theme */
     :root {
       --bg: #f4f8fc;
@@ -352,6 +393,14 @@
       letter-spacing: 8px;
     }
 
+    /* 针对新增项目卡片的微调 */
+    .project .project-btn .arrow {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+    .project .tags {
+      margin-top: 14px;
+    }
   </style>
 </head>
 <body>
@@ -392,9 +441,7 @@
         </div>
         <div class="about-grid">
           <p class="about-text">
-            
-            
-            
+            <!-- 保持空白，与原内容一致 -->
           </p>
           <div class="facts">
             <div class="fact"><strong>Based in</strong>Beijing, China</div>
@@ -421,13 +468,45 @@
       </div>
     </section>
 
+    <!-- SELECTED PROJECTS 部分：Self-study List 卡片 -->
     <section id="projects">
       <div class="container reveal">
         <div class="section-heading">
           <span>03 — Selected Projects</span>
           <h2></h2>
         </div>
-        <div class="projects-empty"><span>♡</span><span>Coming soon...</span><span>✦</span></div>
+        <div class="projects">
+          <!-- Self-study List 卡片 -->
+          <div class="project">
+            <div>
+              <div class="project-number">01</div>
+              <h3>Self-study List</h3>
+              <p>A tool that helps you to plan your self-study.</p>
+            </div>
+            <!-- 跳转按钮：指向已部署的 GitHub Pages 地址，新标签页打开 -->
+            <a class="project-btn" href="https://norimkb24.github.io/self-study-list/" target="_blank" rel="noopener">
+              Click to open <span class="arrow">→</span>
+            </a>
+          </div>
+
+          <!-- 占位卡片 1 -->
+          <div class="project" style="opacity:0.7; border-style: dashed; justify-content: center; align-items: center; text-align: center;">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+              <span style="font-size: 2rem; color: var(--accent-2);">✦</span>
+              <h3 style="font-size: 1.2rem; margin: 0; color: var(--muted);">Coming soon</h3>
+              <p style="font-size: 0.85rem; max-width: 200px; margin: 0 auto;">更多有趣的项目正在路上 ♡</p>
+            </div>
+          </div>
+
+          <!-- 占位卡片 2 -->
+          <div class="project" style="opacity:0.7; border-style: dashed; justify-content: center; align-items: center; text-align: center;">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+              <span style="font-size: 2rem; color: var(--accent-2);">☾</span>
+              <h3 style="font-size: 1.2rem; margin: 0; color: var(--muted);">In progress</h3>
+              <p style="font-size: 0.85rem; max-width: 200px; margin: 0 auto;">持续学习，持续创造 ✦</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
